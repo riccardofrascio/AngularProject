@@ -43,7 +43,6 @@ public class CategoriesController : ControllerBase
 
     // GET: https://localhost:7128/api/Categories
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> GetAllCategories()
     {
         var categories = await _categoryRepository.GetAllAsync();
