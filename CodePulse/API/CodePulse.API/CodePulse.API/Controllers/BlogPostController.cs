@@ -107,7 +107,38 @@ public class BlogPostController : ControllerBase
     [Route("{id:guid}")]
     public async Task<IActionResult> GetBlogPostById([FromRoute] Guid id)
     {
-        var _existingBlogPosts = await _blogPostRepository.getByIdAsync(id);
+        var _existingBlogPosts = await _blogPostRepository.GetByIdAsync(id);
+        if (_existingBlogPosts is null)
+        {
+            return NotFound();
+        }
+        var _response = new BlogPostDto
+        {
+            Id = _existingBlogPosts.Id,
+            Title = _existingBlogPosts.Title,
+            ShortDescription = _existingBlogPosts.ShortDescription,
+            Content = _existingBlogPosts.Content,
+            FeaturedImageUrl = _existingBlogPosts.FeaturedImageUrl,
+            UrlHandle = _existingBlogPosts.UrlHandle,
+            PublishedDate = _existingBlogPosts.PublishedDate,
+            Author = _existingBlogPosts.Author,
+            IsVisible = _existingBlogPosts.IsVisible,
+            Categories = _existingBlogPosts.Categories.Select(x => new CategoryDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                UrlHandle = x.UrlHandle
+            }).ToList()
+        };
+
+        return Ok(_response);
+    }
+
+    [HttpGet]
+    [Route("{url}")]
+    public async Task<IActionResult> GetBlogPostByUrl([FromRoute] string url)
+    {
+        var _existingBlogPosts = await _blogPostRepository.GetByUrlAsync(url);
         if (_existingBlogPosts is null)
         {
             return NotFound();
@@ -188,5 +219,35 @@ public class BlogPostController : ControllerBase
         };
 
         return Ok(response);
+    }
+
+    [HttpDelete]
+    [Route("{id:guid}")]
+    public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
+    {
+        var blogpost = await _blogPostRepository.DeleteAsync(id);
+        if (blogpost is null)
+        {
+            return NotFound();
+        }
+        var response = new BlogPostDto
+        {
+            Id = blogpost.Id,
+            Title = blogpost.Title,
+            ShortDescription = blogpost.ShortDescription,
+            Content = blogpost.Content,
+            FeaturedImageUrl = blogpost.FeaturedImageUrl,
+            UrlHandle = blogpost.UrlHandle,
+            PublishedDate = blogpost.PublishedDate,
+            Author = blogpost.Author,
+            IsVisible = blogpost.IsVisible,
+            Categories = blogpost.Categories.Select(x => new CategoryDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                UrlHandle = x.UrlHandle
+            }).ToList()
+        };
+        return Ok(blogpost);
     }
 }

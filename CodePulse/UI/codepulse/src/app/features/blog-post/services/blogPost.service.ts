@@ -26,8 +26,16 @@ import { UpdateBlogPost } from "../models/update-blog-post.model";
       return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${id}`);
     }
 
+    getPostByUrl(url:string): Observable<BlogPost> {
+      return this.http.get<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${url}`);
+    }
+
     updateBlogPost(id:string, updateBlogPostRequest:UpdateBlogPost): Observable<BlogPost> {
       return this.http.put<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${id}`, updateBlogPostRequest);
+    }
+
+    deleteBlogPost(id: string): Observable<BlogPost> {
+      return this.http.delete<BlogPost>(`${environment.apiBaseUrl}/api/blogpost/${id}`);
     }
 
   }

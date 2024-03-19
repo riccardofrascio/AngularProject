@@ -35,7 +35,7 @@ export class AddBlogpostComponent implements OnDestroy, OnInit {
       isVisible : true,
       publishedDate : new Date(),
       categories: []
-    };
+  };
   }
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories();

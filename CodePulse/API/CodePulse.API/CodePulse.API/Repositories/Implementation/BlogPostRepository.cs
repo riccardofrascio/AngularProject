@@ -1,6 +1,7 @@
 ﻿using CodePulse.API.Data;
 using CodePulse.API.Models.Domain;
 using CodePulse.API.Repositories.Interface;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodePulse.API.Repositories.Implementation
@@ -22,19 +23,37 @@ namespace CodePulse.API.Repositories.Implementation
             return blogPost;
         }
 
+        public async Task<BlogPost?> DeleteAsync(Guid id)
+        {
+            var exsistingBlogpost = await context.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(elem => elem.Id == id);
+
+            if (exsistingBlogpost is null)
+            {
+                return null;
+            }
+            context.BlogPosts.Remove(exsistingBlogpost);
+            await context.SaveChangesAsync();
+            return exsistingBlogpost;
+        }
+
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
             return await context.BlogPosts.Include(x => x.Categories).ToListAsync();
         }
 
-        public async Task<BlogPost?> getByIdAsync(Guid id)
+        public async Task<BlogPost?> GetByIdAsync(Guid id)
         {
             return await context.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(elem => elem.Id == id);
         }
 
+        public async Task<BlogPost?> GetByUrlAsync(string url)
+        {
+            return await context.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(elem => elem.UrlHandle == url);
+        }
+
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
-            var exsistingBlogPost = await context.BlogPosts.FirstOrDefaultAsync(elem => elem.Id == blogPost.Id);
+            var exsistingBlogPost = await context.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(elem => elem.Id == blogPost.Id);
 
             if (exsistingBlogPost is null)
             {

@@ -8,8 +8,18 @@ import { BlogpostListComponent } from './features/blog-post/blogpost-list/blogpo
 import { AddBlogpostComponent } from './features/blog-post/add-blogpost/add-blogpost.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { EditBlogpostComponent } from './features/blog-post/edit-blogpost/edit-blogpost.component';
+import { HomeComponent } from './features/public/home/home.component';
+import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
 
 export const routes: Routes = [
+    {
+      path: '',
+      component: HomeComponent
+    },
+    {
+      path: 'blog/:url',
+      component: BlogDetailsComponent
+    },
     {
         path: 'admin/categories',
         component: CategoryListComponent
