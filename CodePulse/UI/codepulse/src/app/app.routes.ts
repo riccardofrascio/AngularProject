@@ -10,11 +10,16 @@ import { MarkdownModule } from 'ngx-markdown';
 import { EditBlogpostComponent } from './features/blog-post/edit-blogpost/edit-blogpost.component';
 import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
+import { LoginComponent } from './features/auth/login/login.component';
 
 export const routes: Routes = [
     {
       path: '',
       component: HomeComponent
+    },
+    {
+      path: 'login',
+      component: LoginComponent
     },
     {
       path: 'blog/:url',
