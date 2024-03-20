@@ -46,7 +46,6 @@ export class AuthService {
       return user;
     }
     return undefined;
-
   }
 
   logOut(): void {
