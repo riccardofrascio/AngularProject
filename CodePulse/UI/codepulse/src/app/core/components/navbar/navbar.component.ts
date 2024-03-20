@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent implements OnInit{
 
-  
   user?: User;
 
   constructor(private authService: AuthService, private router: Router) {}

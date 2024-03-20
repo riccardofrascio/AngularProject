@@ -6,6 +6,7 @@ import { NavbarComponent } from "./core/components/navbar/navbar.component";
 import { HttpClientModule } from '@angular/common/http';
 import { MarkdownComponent, MarkdownModule } from 'ngx-markdown';
 import { FormsModule } from '@angular/forms';
+
 //import { FormsModule } from '@angular/forms';
 
 @Component({
