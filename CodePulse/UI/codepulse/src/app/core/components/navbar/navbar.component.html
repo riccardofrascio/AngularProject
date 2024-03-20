@@ -9,16 +9,18 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Admin
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="['/admin/categories']">Categories</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" [routerLink]="['/admin/blogposts']">BlogPosts</a></li>
-            </ul>
-          </li>
+          <ng-container *ngIf="user !== undefined && user.roles.includes('Writer')">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" [routerLink]="['/admin/categories']">Categories</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/blogposts']">BlogPosts</a></li>
+              </ul>
+            </li>
+          </ng-container>
         </ul>
         
         <div class="d-flex">
@@ -27,8 +29,16 @@
           </ng-container>
           <ng-template #showLogout>
             <div class="d-flex">
-              <span class="me-2 mt-2">{{user?.email}} </span>
-              <a (click)="onLogout()" class="btn btn-danger">Logout</a>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{user?.email}}
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a (click)="onLogout()" class="dropdown-item text-danger">Logout <i class="bi bi-arrow-bar-right"></i></a></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </ng-template>
         </div>
